@@ -24,6 +24,7 @@ struct nvs_page                                     // For nvs entries
 {                                                   // 1 page is 4096 bytes
   uint32_t  State ;
   uint32_t  Seqnr ;
+  
   uint32_t  Unused[5] ;
   uint32_t  CRC ;
   uint8_t   Bitmap[32] ;
@@ -67,6 +68,8 @@ uint8_t FindNsID ( const esp_partition_t* nvs, const char* ns )
   uint32_t                  offset = 0 ;                      // Offset in nvs partition
   uint8_t                   i ;                               // Index in Entry 0..125
   uint8_t                   bm ;                              // Bitmap for an entry
+  uint8_t                   res = 0xFF ;                      // Function result
+
 
   while ( offset < nvs->size )
   {
@@ -76,7 +79,7 @@ uint8_t FindNsID ( const esp_partition_t* nvs, const char* ns )
     if ( result != ESP_OK )
     {
       dbgprint ( "Error reading NVS!" ) ;
-      return 0xFF ;
+      break ;
     }
     i = 0 ;
     while ( i < 126 )
@@ -86,7 +89,9 @@ uint8_t FindNsID ( const esp_partition_t* nvs, const char* ns )
            ( buf.Entry[i].Ns == 0 ) &&  
            ( strcmp ( ns, buf.Entry[i].Key ) == 0 ) )
       {
-        return ( buf.Entry[i].Data & 0xFF ) ;                 // Return the ID
+        res = buf.Entry[i].Data & 0xFF ;                      // Return the ID
+        offset = nvs->size ;                                  // Stop outer loop as well
+        break ;
       }
       else
       {
@@ -102,6 +107,7 @@ uint8_t FindNsID ( const esp_partition_t* nvs, const char* ns )
     }
     offset += sizeof(nvs_page) ;                              // Prepare to read next page in nvs
   }
+  return res ;
 }
 
 
@@ -119,7 +125,7 @@ void setup()
   uint8_t                   i ;                               // Index in Entry 0..125
   uint8_t                   bm ;                              // Bitmap for an entry
   uint32_t                  offset = 0 ;                      // Offset in nvs partition
-  uint8_t                   namespace_ID ;                    // Namepsce ID found
+  uint8_t                   namespace_ID ;                    // Namespace ID found
   
   Serial.begin ( 115200 ) ;                                   // For debug
   Serial.println() ;
@@ -139,7 +145,7 @@ void setup()
     dbgprint ( "Partition %s not found!", partname ) ;
     return ;
   }
-  namespace_ID = FindNsID ( nvs, "ESP32Radio" ) ;
+  namespace_ID = FindNsID ( nvs, "ESP32Radio" ) ;             // Find ID of our namespace in NVS
   dbgprint ( "Partition ID of ESP32Radio is %d",
              namespace_ID ) ;
   while ( offset < nvs->size )
