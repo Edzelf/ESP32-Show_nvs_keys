@@ -1,0 +1,56 @@
+rst:0x10 (RTCWDT_RTC_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0018,len:4
+load:0x3fff001c,len:956
+load:0x40078000,len:0
+load:0x40078000,len:13076
+entry 0x40078ad0
+
+D: Partition nvs found, 20480 bytes
+D: Namespace ID of ESP32Radio is 4
+D: Key 019: tonela
+D: Key 021: tonelf
+D: Key 025: preset_00
+D: Key 029: preset_01
+D: Key 033: preset_02
+D: Key 037: preset_03
+D: Key 041: preset_04
+D: Key 045: preset_05
+D: Key 049: preset_06
+D: Key 052: preset_07
+D: Key 056: preset_08
+D: Key 059: preset_09
+D: Key 063: preset_10
+D: Key 067: preset_11
+D: Key 071: preset_12
+D: Key 075: gpio_00
+D: Key 077: gpio_12
+D: Key 079: gpio_13
+D: Key 081: clk_server
+D: Key 083: clk_offset
+D: Key 085: clk_dst
+D: Key 087: ir_pin
+D: Key 091: ir_40BF
+D: Key 093: ir_C03F
+D: Key 095: vs_cs
+D: Key 099: vs_dcs
+D: Key 103: vs_dreq
+D: Key 107: tft_cs
+D: Key 111: tft_dc
+D: Key 115: enc_clk
+D: Key 119: enc_dt
+D: Key 000: enc_sw
+D: Key 004: sd_cs
+D: Key 042: preset
+D: Key 000: mqttbroker
+D: Key 002: mqttport
+D: Key 004: mqttuser
+D: Key 006: mqttpasswd
+D: Key 008: wifi_00
+D: Key 010: wifi_01
+D: Key 012: wifi_02
+D: Key 014: volume
+D: Key 016: toneha
+D: Key 018: tonehf
