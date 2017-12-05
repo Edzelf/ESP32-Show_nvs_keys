@@ -130,8 +130,8 @@ void setup()
   Serial.begin ( 115200 ) ;                                   // For debug
   Serial.println() ;
   pi = esp_partition_find ( ESP_PARTITION_TYPE_DATA,          // Get partition iterator for
-      ESP_PARTITION_SUBTYPE_ANY,                              // this partition
-      partname ) ;
+                            ESP_PARTITION_SUBTYPE_ANY,        // this partition
+                            partname ) ;
   if ( pi )
   {
     nvs = esp_partition_get ( pi ) ;                          // Get partition struct
@@ -146,7 +146,7 @@ void setup()
     return ;
   }
   namespace_ID = FindNsID ( nvs, "ESP32Radio" ) ;             // Find ID of our namespace in NVS
-  dbgprint ( "Partition ID of ESP32Radio is %d",
+  dbgprint ( "Namespace ID of ESP32Radio is %d",
              namespace_ID ) ;
   while ( offset < nvs->size )
   {
